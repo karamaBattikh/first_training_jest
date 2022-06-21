@@ -1,29 +1,42 @@
-import React, { useCallback, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { useCallback, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
-const Modal = ({ title, children, onClose }) => {
-    const handleClose = useCallback((e) => {
-        if (e.key === "Escape") onClose()
-    }, [onClose])
+import styles from './modal.module.scss';
 
-    useEffect(() => {
-        document.addEventListener('keydown', handleClose)
-        return () => document.removeEventListener('keydown', handleClose)
-    }, [handleClose])
+const Modal = ({ children, onClose, title }) => {
+  const handleClose = useCallback(
+    (e) => {
+      if (e.key === 'Escape') onClose();
+    },
+    [onClose]
+  );
 
-    return (
-        <div className='wrapper'>
-            <div className='content'>
-                <div className='conetent__header'>
-                    <h1>{title}</h1>
-                    <button aria-label='Fermer' className="close" onClick={onClose}>X</button>
-                </div>
-                <div className='content__body'>
-                    {children}
-                </div>
-            </div>
+  useEffect(() => {
+    document.addEventListener('keydown', handleClose);
+    return () => document.removeEventListener('keydown', handleClose);
+  }, [handleClose]);
 
+  return createPortal(
+    <div className={styles.wrapper}>
+      <div className="content">
+        <div className="conetent__header">
+          <h1>{title}</h1>
+          <button data-testid="close" className="close" onClick={onClose}>
+            X
+          </button>
         </div>
-    )
-}
+        <div className="content__body">{children}</div>
+      </div>
+    </div>,
+    document.body
+  );
+};
 
-export default Modal
+export default Modal;
+
+Modal.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func,
+  title: PropTypes.string,
+};
