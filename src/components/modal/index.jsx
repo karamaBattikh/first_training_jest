@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-import styles from './modal.module.scss';
+import * as styles from './modal.module.scss';
 
 const Modal = ({ children, onClose, title }) => {
   const handleClose = useCallback(
