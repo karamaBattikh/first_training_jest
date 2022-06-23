@@ -3,7 +3,7 @@ import React from 'react';
 
 import Modal from './index';
 
-describe('Modal test', () => {
+describe('Modal Component', () => {
   test('the title must be in the screen when isShowing', () => {
     render(
       <Modal isShowing={true} title="Bonjour!">
