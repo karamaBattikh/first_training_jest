@@ -67,6 +67,7 @@
         "extensions": [".js", ".jsx"]
       }
     },
-    "testing-library/prefer-screen-queries": "error"
+    "testing-library/prefer-screen-queries": "error",
+    "prettier/prettier": 0
   }
 }

@@ -1,10 +1,16 @@
 import PropTypes from 'prop-types';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+
+import useClickOutSide from 'hooks/useClickOutSide';
 
 import styles from './modal.module.scss';
 
 const Modal = ({ children, isShowing, onClose, title }) => {
+  const ref = useRef();
+
+  useClickOutSide(ref, () => onClose());
+
   const handleClose = useCallback(
     (e) => {
       if (e.key === 'Escape') onClose();
@@ -21,7 +27,7 @@ const Modal = ({ children, isShowing, onClose, title }) => {
     ? createPortal(
       <div data-testid="modal" className={styles['modal-overlay']}>
         <div className={styles['modal-wrapper']}>
-          <div className={styles.modal}>
+          <div ref={ref} className={styles.modal}>
             <div className={styles.modal__header}>
               <h4>{title}</h4>
               <button

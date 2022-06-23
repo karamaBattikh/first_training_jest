@@ -3,59 +3,65 @@ import React from 'react';
 
 import Modal from './index';
 
-test("Le title devrait s'afficher si isShowing", () => {
-  render(
-    <Modal isShowing={true} title="Bonjour!">
-      karama
-    </Modal>
-  );
-  expect(screen.getByText('Bonjour!')).toBeInTheDocument();
-});
+describe('Modal test', () => {
+  test('the title must be in the screen when isShowing', () => {
+    render(
+      <Modal isShowing={true} title="Bonjour!">
+        karama
+      </Modal>
+    );
+    expect(screen.getByText('Bonjour!')).toBeInTheDocument();
+  });
 
-/*
-test("Le title ne devrait pas s'afficher si isShowing est false",async () => {
-  render(
-    <Modal title="Bonjour!">
-      karama
-    </Modal>
-  );
+  test("the title must not be in the screen when isShowing: false", async () => {
+    render(<Modal title="Bonjour!">karama</Modal>);
 
-  const title = await waitFor(()=> screen.getByTestId('modal'))
-  expect(title).not.toBeInTheDocument();
-});
-*/
+    expect(screen.queryByTestId('modal')).toBeNull();
+  });
 
-test('le callback de fermelure est appelé lors du click sur X', () => {
-  const mockClose = jest.fn();
-  render(
-    <Modal isShowing={true} title="Bonjour!" onClose={mockClose}>
-      Modal Content
-    </Modal>
-  );
-  const close = screen.getByTestId('close');
-  fireEvent.click(close);
-  // La fonction simulée est appelée = 1
-  expect(mockClose.mock.calls.length).toBe(1);
-});
+  test('the closing callback is called when clicking on X', () => {
+    const mockClose = jest.fn();
+    render(
+      <Modal isShowing={true} title="Bonjour!" onClose={mockClose}>
+        Modal Content
+      </Modal>
+    );
+    const close = screen.getByTestId('close');
+    fireEvent.click(close);
+    // La fonction simulée est appelée = 1
+    expect(mockClose.mock.calls.length).toBe(1);
+  });
 
-test('Le callback de fermeture est appelé avec échap', () => {
-  const mockClose = jest.fn();
-  render(
-    <Modal isShowing={true} title="Bonjour!" onClose={mockClose}>
-      Modal Content
-    </Modal>
-  );
-  fireEvent.keyDown(document, { key: 'Escape' });
-  expect(mockClose.mock.calls.length).toBe(1);
-});
+  test('The closing callback is called with escape', () => {
+    const mockClose = jest.fn();
+    render(
+      <Modal isShowing={true} title="Bonjour!" onClose={mockClose}>
+        Modal Content
+      </Modal>
+    );
+    fireEvent.keyDown(document, { key: 'Escape' });
+    expect(mockClose.mock.calls.length).toBe(1);
+  });
 
-test("Le callback de fermeture n'est pas appelé avec une autre touché qu'échap", function () {
-  const mockClose = jest.fn();
-  render(
-    <Modal isShowing={true} title="Bonjour les gens" onClose={mockClose}>
-      Bonjour
-    </Modal>
-  );
-  fireEvent.keyDown(document, { key: 'Enter' });
-  expect(mockClose.mock.calls.length).toBe(0);
+  test("The closing callback is not called with any keystroke other than escape", function () {
+    const mockClose = jest.fn();
+    render(
+      <Modal isShowing={true} title="Bonjour les gens" onClose={mockClose}>
+        Bonjour
+      </Modal>
+    );
+    fireEvent.keyDown(document, { key: 'Enter' });
+    expect(mockClose.mock.calls.length).toBe(0);
+  });
+
+  test('the modal must be closed when clicked outside', () => {
+    const mockClose = jest.fn();
+    render(
+      <Modal isShowing={true} title="Bonjour les gens" onClose={mockClose}>
+        Bonjour
+      </Modal>
+    );
+    fireEvent.click(document);
+    expect(mockClose).toBeCalled();
+  });
 });
