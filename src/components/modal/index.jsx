@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import { useCallback, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-import * as styles from './modal.module.scss';
+import styles from './modal.module.scss';
 
-const Modal = ({ children, onClose, title }) => {
+const Modal = ({ children, isShowing, onClose, title }) => {
   const handleClose = useCallback(
     (e) => {
       if (e.key === 'Escape') onClose();
@@ -17,26 +17,36 @@ const Modal = ({ children, onClose, title }) => {
     return () => document.removeEventListener('keydown', handleClose);
   }, [handleClose]);
 
-  return createPortal(
-    <div className={styles.wrapper}>
-      <div className="content">
-        <div className="conetent__header">
-          <h1>{title}</h1>
-          <button data-testid="close" className="close" onClick={onClose}>
-            X
-          </button>
+  return isShowing
+    ? createPortal(
+      <div data-testid="modal" className={styles['modal-overlay']}>
+        <div className={styles['modal-wrapper']}>
+          <div className={styles.modal}>
+            <div className={styles.modal__header}>
+              <h4>{title}</h4>
+              <button
+                type="button"
+                data-testid="close"
+                className={styles['modal__header--close']}
+                onClick={onClose}
+              >
+                <span>&times;</span>
+              </button>
+            </div>
+            <div className={styles.modal__body}>{children}</div>
+          </div>
         </div>
-        <div className="content__body">{children}</div>
-      </div>
-    </div>,
-    document.body
-  );
+      </div>,
+      document.body
+    )
+    : null;
 };
 
 export default Modal;
 
 Modal.propTypes = {
   children: PropTypes.node,
+  isShowing: PropTypes.bool,
   onClose: PropTypes.func,
   title: PropTypes.string,
 };

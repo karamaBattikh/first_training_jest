@@ -3,15 +3,32 @@ import React from 'react';
 
 import Modal from './index';
 
-test("Le title devrait s'afficher", () => {
-  render(<Modal title="Bonjour!">karama</Modal>);
+test("Le title devrait s'afficher si isShowing", () => {
+  render(
+    <Modal isShowing={true} title="Bonjour!">
+      karama
+    </Modal>
+  );
   expect(screen.getByText('Bonjour!')).toBeInTheDocument();
 });
+
+/*
+test("Le title ne devrait pas s'afficher si isShowing est false",async () => {
+  render(
+    <Modal title="Bonjour!">
+      karama
+    </Modal>
+  );
+
+  const title = await waitFor(()=> screen.getByTestId('modal'))
+  expect(title).not.toBeInTheDocument();
+});
+*/
 
 test('le callback de fermelure est appelé lors du click sur X', () => {
   const mockClose = jest.fn();
   render(
-    <Modal title="Bonjour!" onClose={mockClose}>
+    <Modal isShowing={true} title="Bonjour!" onClose={mockClose}>
       Modal Content
     </Modal>
   );
@@ -24,7 +41,7 @@ test('le callback de fermelure est appelé lors du click sur X', () => {
 test('Le callback de fermeture est appelé avec échap', () => {
   const mockClose = jest.fn();
   render(
-    <Modal title="Bonjour!" onClose={mockClose}>
+    <Modal isShowing={true} title="Bonjour!" onClose={mockClose}>
       Modal Content
     </Modal>
   );
@@ -35,7 +52,7 @@ test('Le callback de fermeture est appelé avec échap', () => {
 test("Le callback de fermeture n'est pas appelé avec une autre touché qu'échap", function () {
   const mockClose = jest.fn();
   render(
-    <Modal title="Bonjour les gens" onClose={mockClose}>
+    <Modal isShowing={true} title="Bonjour les gens" onClose={mockClose}>
       Bonjour
     </Modal>
   );
