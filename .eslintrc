@@ -48,7 +48,9 @@
     "no-console": "warn",
     "no-duplicate-imports": "warn",
     "no-unused-vars": "warn",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "prettier/prettier": 0,
+    "react/jsx-key": "off"
   },
   "settings": {
     "react": {
@@ -60,7 +62,6 @@
         "extensions": [".js", ".jsx"]
       }
     },
-    "testing-library/prefer-screen-queries": "error",
-    "prettier/prettier": 0
+    "testing-library/prefer-screen-queries": "error"
   }
 }

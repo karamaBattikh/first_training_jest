@@ -43,7 +43,7 @@ describe('Modal Component', () => {
     expect(mockClose.mock.calls.length).toBe(1);
   });
 
-  test("The closing callback is not called with any keystroke other than escape", function () {
+  test("The closing callback is not called with any keystroke other than escape", () => {
     const mockClose = jest.fn();
     render(
       <Modal isShowing={true} title="Bonjour les gens" onClose={mockClose}>
