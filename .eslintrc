@@ -20,6 +20,7 @@
     "sourceType": "module"
   },
   "extends": [
+    "airbnb-base",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
@@ -29,10 +30,9 @@
     "plugin:import/recommended",
     "prettier"
   ],
-  "plugins": ["import", "prettier", "react"],
+  "plugins": ["import", "prettier", "react", "sort-keys-fix", "sort-destructure-keys"],
   "root": true,
   "rules": {
-    "indent": ["error", 2], 
     "import/order": [
       "error",
       {
@@ -43,15 +43,8 @@
         "newlines-between": "always"
       }
     ],
-    "sort-keys": [
-      "warn",
-      "asc",
-      {
-        "caseSensitive": true,
-        "minKeys": 2,
-        "natural": false
-      }
-    ],
+    "sort-destructure-keys/sort-destructure-keys": [2, { "caseSensitive": false }],
+    "sort-keys-fix/sort-keys-fix": "warn",
     "no-console": "warn",
     "no-duplicate-imports": "warn",
     "no-unused-vars": "warn",

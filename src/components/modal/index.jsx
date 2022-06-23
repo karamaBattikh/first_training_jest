@@ -25,26 +25,26 @@ const Modal = ({ children, isShowing, onClose, title }) => {
 
   return isShowing
     ? createPortal(
-      <div data-testid="modal" className={styles['modal-overlay']}>
-        <div className={styles['modal-wrapper']}>
-          <div ref={ref} className={styles.modal}>
-            <div className={styles.modal__header}>
-              <h4>{title}</h4>
-              <button
-                type="button"
-                data-testid="close"
-                className={styles['modal__header--close']}
-                onClick={onClose}
-              >
-                <span>&times;</span>
-              </button>
+        <div data-testid="modal" className={styles['modal-overlay']}>
+          <div className={styles['modal-wrapper']}>
+            <div ref={ref} className={styles.modal}>
+              <div className={styles.modal__header}>
+                <h4>{title}</h4>
+                <button
+                  type="button"
+                  data-testid="close"
+                  className={styles['modal__header--close']}
+                  onClick={onClose}
+                >
+                  <span>&times;</span>
+                </button>
+              </div>
+              <div className={styles.modal__body}>{children}</div>
             </div>
-            <div className={styles.modal__body}>{children}</div>
           </div>
-        </div>
-      </div>,
-      document.body
-    )
+        </div>,
+        document.body
+      )
     : null;
 };
 
