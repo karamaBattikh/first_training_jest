@@ -21,7 +21,11 @@ const Home = () => {
 
   return (
     <div>
-      <button className={styles.home__button} onClick={() => handleToggle(true)}>
+      <button
+        data-testid="button_modal"
+        className={styles.home__button}
+        onClick={() => handleToggle(true)}
+      >
         open Modal
       </button>
       <Modal isShowing={toggle} title="Bonjour!" onClose={() => handleToggle(false)}>

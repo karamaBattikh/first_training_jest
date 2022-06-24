@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, renderHook, screen, waitFor } from '@testing-library/react';
 import userMockData from 'mockData/user';
 
 import Home from '.';
 
 jest.mock('axios');
 
-describe('Home Component', () => {
+describe('Home Component User List', () => {
   test('Loading in screen', () => {
     axios.get.mockResolvedValue({ data: userMockData });
     render(<Home />);
@@ -30,5 +30,14 @@ describe('Home Component', () => {
 
     const userList = await waitFor(() => screen.getByTestId('user-list'));
     expect(userList).toBeInTheDocument();
+  });
+});
+
+describe('Home Component Button & Modal', () => {
+  test('open modal win click button', () => {
+    render(<Home />);
+    const button = screen.getByTestId('button_modal');
+    fireEvent.click(button);
+    expect(screen.queryByTestId('modal')).toBeInTheDocument();
   });
 });
