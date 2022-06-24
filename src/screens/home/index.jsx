@@ -14,7 +14,6 @@ const Home = () => {
   useEffect(() => {
     const handle = async () => {
       const list = await fetchUser();
-      console.log('*user*', list);
       setUsers(list);
     };
     handle();
@@ -30,7 +29,7 @@ const Home = () => {
       </Modal>
       {users.length > 0 ? (
         <>
-          <h1 className={styles.home__title}>User</h1>
+          <h1 className={styles.home__title}>Users</h1>
           <List list={users} />
         </>
       ) : (
